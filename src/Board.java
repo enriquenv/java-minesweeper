@@ -6,6 +6,7 @@ public class Board {
     private int size = 10;
     private boolean[][] minesGrid;
     private int numberOfMines = 10;
+    private boolean mineWasHit = false;
 
     public Board() {
         grid = new char[size][size];
@@ -45,6 +46,35 @@ public class Board {
          * System.out.println();
          * }
          */
+    }
+
+    public boolean revealCell(int row, int col) {
+        mineWasHit = false;
+
+        if (row < 0 || row >= size || col < 0 || col >= size) {
+            System.out.println("Invalid coordinates. Try again.");
+            return false;
+        }
+
+        if (grid[row][col] != '?') {
+            System.out.println("Cell already revealed. Try again.");
+            return false;
+        }
+
+        if (minesGrid[row][col]) {
+            grid[row][col] = 'X';
+            mineWasHit = true;
+            // Game over
+            return true;
+        } else {
+            grid[row][col] = '0';
+            // Game continues
+            return false;
+        }
+    }
+
+    public boolean isMineHit() {
+        return mineWasHit;
     }
 
     public void displayBoard() {

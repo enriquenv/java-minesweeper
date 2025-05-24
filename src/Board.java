@@ -48,6 +48,31 @@ public class Board {
          */
     }
 
+    private int countAdjacentMines(int row, int col) {
+        int count = 0;
+
+        for (int rowOffset = -1; rowOffset <= 1; rowOffset++) {
+
+            for (int colOffset = -1; colOffset <= 1; colOffset++) {
+
+                if (rowOffset == 0 && colOffset == 0) {
+                    continue;
+                }
+
+                int neighborRow = row + rowOffset;
+                int neighborCol = col + colOffset;
+
+                if (neighborRow >= 0 && neighborRow < size && neighborCol >= 0 && neighborCol < size) {
+
+                    if (minesGrid[neighborRow][neighborCol]) {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     public boolean revealCell(int row, int col) {
         mineWasHit = false;
 
@@ -67,7 +92,8 @@ public class Board {
             // Game over
             return true;
         } else {
-            grid[row][col] = '0';
+            int adjacentMines = countAdjacentMines(row, col);
+            grid[row][col] = (char) (adjacentMines + '0');
             // Game continues
             return false;
         }

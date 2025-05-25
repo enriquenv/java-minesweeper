@@ -34,6 +34,12 @@ public class App {
             if (gameOver && gameBoard.isMineHit()) {
                 System.out.println("BOOM! You hit a mine!");
                 gameBoard.displayBoard();
+            } else if (!gameOver) {
+                if (gameBoard.checkWinCondition()) {
+                    System.out.println("Congratulations! You found all non-mined cells! You WIN!");
+                    gameBoard.displayBoard();
+                    gameOver = true;
+                }
             }
         }
 

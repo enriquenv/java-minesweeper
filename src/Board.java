@@ -103,6 +103,22 @@ public class Board {
         return mineWasHit;
     }
 
+    public boolean checkWinCondition() {
+        int totalCells = size * size;
+        int safeCellsToReveal = totalCells - numberOfMines;
+        int revealedSafeCellsCount = 0;
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+
+                if (grid[i][j] != '?' && !minesGrid[i][j]) {
+                    revealedSafeCellsCount++;
+                }
+            }
+        }
+        return revealedSafeCellsCount == safeCellsToReveal;
+    }
+
     public void displayBoard() {
         // System.out.println("Board displayed");
         System.out.println("\n  Current board:");
